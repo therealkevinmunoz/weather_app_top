@@ -5,15 +5,21 @@ function retrieveCoordinates(cityName) {
     if (cityName !== null || cityName !== undefined) {
       fetch(geocodingURL, {
         mode: 'cors',
-      }).then((reponse) => reponse.json()).then((jsonResponse) => {
-        console.log(jsonResponse);
-        console.log(`Lat: ${jsonResponse[0].lat}`);
-        console.log(`Lon: ${jsonResponse[0].lon}`);
+      }).then((reponse) => reponse.json())
+        .then((jsonResponse) => {
+          clearError();
+          console.log(jsonResponse);
+          console.log(`Lat: ${jsonResponse[0].lat}`);
+          console.log(`Lon: ${jsonResponse[0].lon}`);
 
-        resolve([jsonResponse[0].lat, jsonResponse[0].lon]);
-      });
+          resolve([jsonResponse[0].lat, jsonResponse[0].lon]);
+        })
+        .catch((error) => {
+          console.log(error);
+          displayError();
+        });
     } else {
-      reject(alert('City not found'));
+      reject(displayError());
     }
   });
 }
@@ -59,18 +65,38 @@ function displayWeatherData(weatherArray) {
   });
 }
 
+function displayError() {
+  const errorField = document.getElementById('error');
+  errorField.textContent = 'We could not find your city. Try again.';
+  errorField.style.padding = '10px';
+}
+
+function clearError() {
+  const errorField = document.getElementById('error');
+  errorField.textContent = '';
+  errorField.style.removeProperty('padding');
+}
+
 const cityNameField = document.getElementById('cityName');
 
-cityNameField.addEventListener('blur', () => {
+cityNameField.addEventListener('search', () => {
   if (cityNameField.value !== '') {
     retrieveCoordinates(cityNameField.value)
       .then((response) => retrieveWeatherData(response[0], response[1]))
-      .then((response) => displayWeatherData(response));
+      .then((response) => displayWeatherData(response))
+      .catch((error) => {
+        console.log(error);
+        displayError();
+      });
   }
 });
 
 window.addEventListener('load', () => {
   retrieveCoordinates('Los Angeles')
     .then((response) => retrieveWeatherData(response[0], response[1]))
-    .then((response) => displayWeatherData(response));
+    .then((response) => displayWeatherData(response))
+    .catch((error) => {
+      console.log(error);
+      displayError();
+    });
 });
