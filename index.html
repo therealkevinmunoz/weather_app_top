@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet"/>
+    <script src="script.js" async></script>
+</head>
+<body>
+    <div class="page-content">
+        <header>
+            <input id="cityName" name="cityName" placeholder="Find your city">
+        </header>
+        <div class="weather-content">
+            <div class="weather-content-top">
+                <h1 id="cityTitle"></h1>
+                <span>|</span>
+                <h3><span id="weatherType"></span></h3>
+            </div>
+            <div class="weather-content-middle">
+                <h2><span id="mainTemp"></span>&#8457;</h2>
+            </div>
+            <div class="weather-content-middle-2">
+                <h3>Feels Like: <span id="feelsLike"></span>&#8457;</h3>
+                <span>|</span>
+                <h3>Humidity: <span id="humidity"></span>%</h3>
+            </div>
+            <div class="weather-content-bottom">
+                <h3>Today, you can expect <span id="weatherDescription"></span>.</h3>
+            </div> 
+        </div> 
+    </div>
+</body>
+</html>
